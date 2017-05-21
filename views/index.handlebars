@@ -1,0 +1,145 @@
+  <div class="jumbotron">
+        <div class="container">
+            <div class="btn-toolbar">
+                {{#if user}}
+                    Hello {{user}}. <a href="/signout"><button type="button" class="btn btn-success pull-right">Sign Out</button></a>
+                {{else}}
+                    <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#signInModal">Sign In</button>
+                    <button type="button" class="btn btn-warning pull-right" data-toggle="modal" data-target="#signUpModal">Sign Up</button>
+                {{/if}}
+            </div>
+        </div>
+        <h1>chicken_scratch</h1>
+        <h2 class="slogan">create ... collaborate ... enjoy</h2>
+        <br>
+        <button type="button" class="btn btn-lg center-block" data-toggle="modal" data-target="#startStoryModal">Start your own story</button>
+    </div>
+
+    {{#each this.stories}}
+    <div class="container">
+        <div class="well well-lg">
+
+            <div class="story-panel panel">
+                <div class="panel panel-header">
+                    <h2 id="title">{{this.title}}</h2>
+                </div>
+
+                <div class="story_blurb" class="panel panel-body">
+                    <div class="row">
+                        <div class="col-lg-3 col-xs-12">
+                            <img src="{{this.cover_art}}" style="margin: 0 0 0 10px;" width="100%"/>
+                        </div>
+                        <div class="col-lg-9 col-xs-12">
+                            {{this.blurb}} <span id="contributorCount">Contributions: {{this.Contributions.length}}</span></p>
+                        </div>
+                   </div>
+                    <div class="panel-footer">
+                    <a href="/story/{{this.id}}">
+                        <button  type="submitStory button" class="viewStory btn center-block" data-toggle="modal" data-target="#myModal">View Full Story</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+    <div id="footer">&copy; Frantic Chickens 2017</div>
+    
+    
+    <!--launches modal when user clicks "create story"-->
+    <div class="modal fade" id="startStoryModal" tabindex=nod"-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Create a Story</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+
+                            <form role="form" action="/api/new/story" method="POST">
+                                <div class="form-group">
+                                    <label>Story Title</label>
+                                    <input name="title" type="text" class="form-control" id="story_title"></input>
+                                    <label>Blurb</label>
+                                    <textarea name="blurb" type="text" class="form-control" rows="5" id="story_blurb"></textarea>
+                                </div>
+                                <div class="btn-toolbar">
+
+                                    <button type="button" class="btn pull-right" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn pull-right">Save changes</button>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--launches modal when user clicks "sign in"-->
+    <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Sign In</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+
+                            <form role="form" id="signin" action="/signin" method="POST">
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input name="username" type="text" class="form-control" id="signInUsername">
+                                    <label>Password</label>
+                                    <input name="password" type="password" class="form-control" id="signInPassword">
+                                </div>
+                                <div class="btn-toolbar">
+
+                                    <button type="button" class="btn pull-right" data-dismiss="modal">Close</button>
+                                    <button id="signin" type="submit" class="btn pull-right">Sign In</button>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--launches modal when user clicks "sign up"-->
+    <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Sign Up</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+
+                            <form role="form" action="/signup" method="POST">
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input name="username" type="text" class="form-control" id="signUpUsername">
+                                    <label>Password</label>
+                                    <input name="password" type="password" class="form-control" id="signUpPassword">
+                                </div>
+                                <div class="btn-toolbar">
+
+                                    <button type="button" class="btn  pull-right" data-dismiss="modal">Close</button>
+                                    <button id="signup" type="submit" class="btn  pull-right">Sign Up</button>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
